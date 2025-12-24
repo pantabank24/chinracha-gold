@@ -45,8 +45,6 @@
     padding: 0;
     margin: 0;
   }
-
-  /* ลบพวก header/footer ที่ browser ใส่ให้ */
   @page {
     size: A6 portrait;
     margin: 1cm;
