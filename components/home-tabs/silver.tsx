@@ -185,7 +185,7 @@ export const SilverPage = ({
                     แท่งเงิน 99.99%
                   </span>
                   <div className=" grid grid-cols-2  gap-x-4">
-                    <div className="backdrop-blur-xl border border-white/20 bg-gradient-to-b from-black/90 to-red-900 flex flex-col items-center py-5 rounded-2xl h-20 justify-center">
+                    <div className="backdrop-blur-xl border border-white/20 bg-gradient-to-b from-black/40 to-yellow-600 flex flex-col items-center py-5 rounded-2xl h-20 justify-center">
                       {isLoading ? (
                         <CircularProgress
                           aria-label="Loading..."
@@ -196,7 +196,7 @@ export const SilverPage = ({
                           <span className=" font-bold text-sm bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">
                             ราคารับซื้อ (บาท)
                           </span>
-                          <span className=" text-3xl bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent font-bold flex flex-row">
+                          <span className=" text-3xl bg-gradient-to-b from-white/70 to-white bg-clip-text text-transparent font-bold flex flex-row">
                             {(data?.buy ?? 0).toLocaleString(`th-TH`, {
                               minimumFractionDigits: 0,
                               maximumFractionDigits: 2,
@@ -205,7 +205,7 @@ export const SilverPage = ({
                         </div>
                       )}
                     </div>
-                    <div className="backdrop-blur-xl border border-white/20 bg-gradient-to-b from-black/90 to-red-900 flex flex-col items-center py-5 rounded-2xl h-20 justify-center">
+                    <div className="backdrop-blur-xl border border-white/20 bg-gradient-to-b from-black/40 to-yellow-600 flex flex-col items-center py-5 rounded-2xl h-20 justify-center">
                       {isLoading ? (
                         <CircularProgress
                           aria-label="Loading..."
@@ -216,7 +216,7 @@ export const SilverPage = ({
                           <span className=" font-bold text-sm bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent  ">
                             ราคาขาย (บาท)
                           </span>
-                          <span className=" text-3xl bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent font-bold">
+                          <span className=" text-3xl bg-gradient-to-b from-white/70 to-white bg-clip-text text-transparent font-bold">
                             {(data?.sell ?? 0).toLocaleString(`th-TH`, {
                               minimumFractionDigits: 0,
                               maximumFractionDigits: 2,

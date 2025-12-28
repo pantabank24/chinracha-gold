@@ -10,9 +10,9 @@ export const BannerSlider = () => {
   const banners = [
     {
       id: 1,
-      title: "ร้านชินราชา",
-      subtitle: "รับเช็คเปอร์เซ็นต์ทอง รับซื้อทองคำทุกประเภท",
-      thirdTitle: "085-0291035 / 095-6756239",
+      title: "",
+      subtitle: "",
+      thirdTitle: "",
       image: "/images/banner1.png",
       imageMb: "/images/banner1.png",
       gradient: "bg-black/30",
@@ -23,8 +23,8 @@ export const BannerSlider = () => {
       subtitle:
         "รอบพระ พระทองคำ ทองรูปพรรณ ทองเค ทองเก่า เข็มขัดนาค เครื่องเงิน รับซื้อตั๋วจำนำ ให้ราคาสูง เช็คเบื้องต้น หลอมทอง ฟรี บริการตรวจเช็คเปอร์เซ็นต์ทอง พร้อมใบแสดงผล",
       thirdTitle: "",
-      image: "/images/banner1.png",
-      imageMb: "/images/banner1.png",
+      image: "/images/banner2.png",
+      imageMb: "/images/banner2.png",
       gradient: "bg-black/30",
     },
   ];

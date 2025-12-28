@@ -354,7 +354,7 @@ export const HomePages = ({
                     ทองคำเเท่ง 96.5%
                   </span>
                   <div className=" grid grid-cols-2  gap-x-4">
-                    <div className="backdrop-blur-xl border border-white/20 bg-gradient-to-b from-black/90 to-red-900 flex flex-col items-center py-5 rounded-2xl h-20 justify-center">
+                    <div className="backdrop-blur-xl border border-white/20 bg-gradient-to-b from-black/40 to-yellow-600 flex flex-col items-center py-5 rounded-2xl h-20 justify-center">
                       {isLoading ? (
                         <CircularProgress
                           aria-label="Loading..."
@@ -365,7 +365,7 @@ export const HomePages = ({
                           <span className=" font-normal text-sm text-yellow-500">
                             ราคารับซื้อ (บาท)
                           </span>
-                          <span className=" text-3xl bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent font-bold flex flex-row">
+                          <span className=" text-3xl bg-gradient-to-b from-white/70 to-white bg-clip-text text-transparent font-bold flex flex-row">
                             {(data?.gold965.ask ?? 0).toLocaleString(`th-TH`, {
                               minimumFractionDigits: 0,
                               maximumFractionDigits: 2,
@@ -374,7 +374,7 @@ export const HomePages = ({
                         </div>
                       )}
                     </div>
-                    <div className="backdrop-blur-xl border border-white/20 bg-gradient-to-b from-black/90 to-red-900 flex flex-col items-center py-5 rounded-2xl h-20 justify-center">
+                    <div className="backdrop-blur-xl border border-white/20 bg-gradient-to-b from-black/40 to-yellow-600 flex flex-col items-center py-5 rounded-2xl h-20 justify-center">
                       {isLoading ? (
                         <CircularProgress
                           aria-label="Loading..."
@@ -385,7 +385,7 @@ export const HomePages = ({
                           <span className=" font-normal text-sm text-yellow-500 ">
                             ราคาขาย (บาท)
                           </span>
-                          <span className=" text-3xl bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent font-bold">
+                          <span className="text-3xl bg-gradient-to-b from-white/70 to-white bg-clip-text text-transparent font-bold flex flex-row">
                             {(data?.gold965.bid ?? 0).toLocaleString(`th-TH`, {
                               minimumFractionDigits: 0,
                               maximumFractionDigits: 2,
