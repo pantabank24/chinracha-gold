@@ -9,4 +9,8 @@ export interface Gold965 {
     diff: any
     change_today: number
     change_yesterday: number
+    jewelry?: {
+      bid: number | null
+      ask: number | null
+    }
   }

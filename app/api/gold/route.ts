@@ -8,16 +8,23 @@ export async function GET() {
 
     let ask = null;
     let bid = null;
+    let jewelryAsk = null;
+    let jewelryBid = null;
     let changeToday: number | null = null;
     let changeFromYesterday: number | null = null;
     let latestUpdate: string | null = null;
 
     $('tr').each((_, el) => {
       const tds = $(el).find('td');
-      if (tds.length >= 3 && $(tds[0]).text().includes('ทองคำแท่ง')) {
-        ask = parseFloat($(tds[1]).text().replace(/,/g, ''));
-        bid = parseFloat($(tds[2]).text().replace(/,/g, ''));
-        return false; // หยุด loop เมื่อเจอแล้ว
+      if (tds.length >= 3) {
+        if ($(tds[0]).text().includes('ทองคำแท่ง')) {
+          bid = parseFloat($(tds[1]).text().replace(/,/g, ''));
+          ask = parseFloat($(tds[2]).text().replace(/,/g, ''));
+        }
+        if ($(tds[0]).text().includes('ทองรูปพรรณ 96.5%')) {
+          jewelryAsk = parseFloat($(tds[1]).text().replace(/,/g, ''));
+          jewelryBid = parseFloat($(tds[2]).text().replace(/,/g, ''));
+        }
       }
     });
   
@@ -48,7 +55,11 @@ export async function GET() {
         diff: ask - bid,
         change_today: changeToday,
         change_yesterday: changeFromYesterday,
-        latest_update: latestUpdate
+        latest_update: latestUpdate,
+        jewelry: {
+          ask: jewelryAsk,
+          bid: jewelryBid,
+        },
       },
       timestamp: new Date().toISOString(),
     };
