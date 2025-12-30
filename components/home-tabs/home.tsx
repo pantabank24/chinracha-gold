@@ -383,16 +383,15 @@ export const HomePages = ({
                       ) : (
                         <div className=" flex flex-col items-center">
                           <span className=" font-normal text-sm text-yellow-500 ">
-                            ทองรูปพรรณ 96.5%
+                            ทองรูปพรรณ 96%
                           </span>
                           <span className="text-3xl bg-gradient-to-b from-white/70 to-white bg-clip-text text-transparent font-bold flex flex-row">
-                            {(data?.gold965?.jewelry?.bid ?? 0).toLocaleString(
-                              `th-TH`,
-                              {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 2,
-                              }
-                            )}
+                            {(
+                              Math.round((data?.gold965?.ask ?? 0) * 0.96) ?? 0
+                            ).toLocaleString(`th-TH`, {
+                              minimumFractionDigits: 0,
+                              maximumFractionDigits: 2,
+                            })}
                           </span>
                         </div>
                       )}
