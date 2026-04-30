@@ -1,50 +1,22 @@
-import axios from 'axios';
-import * as cheerio from 'cheerio';
+import axios from "axios";
+import * as cheerio from "cheerio";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const res = await axios.get('https://xn--42cah7d0cxcvbbb9x.com/');
-    const $ = cheerio.load(res.data);
+    const ts = Date.now();
+    const url = `https://thaigold.info/RealTimeDataV2/GoldPriceToday.xml?_=${ts}`;
+    const res = await axios.get(url);
+    const $ = cheerio.load(res.data, { xmlMode: true });
 
-    let ask = null;
-    let bid = null;
-    let jewelryAsk = null;
-    let jewelryBid = null;
-    let changeToday: number | null = null;
-    let changeFromYesterday: number | null = null;
-    let latestUpdate: string | null = null;
+    const ask = parseFloat($('buyprice').text().replace(/,/g, ''));
+    const bid = parseFloat($('saleprice').text().replace(/,/g, ''));
+    const changeToday = parseFloat($('buypricechg').text().replace(/,/g, ''));
+    const changeFromYesterday = parseFloat($('SumOfChg').text().replace(/,/g, ''));
+    const latestUpdate = $('update').text();
 
-    $('tr').each((_, el) => {
-      const tds = $(el).find('td');
-      if (tds.length >= 3) {
-        if ($(tds[0]).text().includes('ทองคำแท่ง')) {
-          bid = parseFloat($(tds[1]).text().replace(/,/g, ''));
-          ask = parseFloat($(tds[2]).text().replace(/,/g, ''));
-        }
-        if ($(tds[0]).text().includes('ทองรูปพรรณ 96.5%')) {
-          jewelryAsk = parseFloat($(tds[1]).text().replace(/,/g, ''));
-          jewelryBid = parseFloat($(tds[2]).text().replace(/,/g, ''));
-        }
-      }
-    });
-  
-
-    $('tr').each((_, el) => {
-      const tds = $(el).find('td');
-
-      // ✅ หาแถวที่มี span.css-sprite-up → "วันนี้ +100"
-      if ($(tds[0]).text().includes('วันนี้ ')) {
-        changeFromYesterday = parseFloat($(tds[0]).text().replace(/[^\d.-]/g, ''));
-        changeToday = parseFloat($(tds[2]).text().replace(/,/g, ''));
-      }
-
-      // ✅ หาแถวสุดท้ายที่มี "-50"
-      if ($(tds[2]).text()) {
-        // changeToday = parseFloat($(tds[2]).text().replace(/,/g, ''));
-      }
-    });
-
-    if (bid === null || ask === null) {
+    if (isNaN(bid) || isNaN(ask)) {
       throw new Error('ไม่ได้พบข้อมูลราคาทองคำแท่ง');
     }
 
@@ -56,23 +28,53 @@ export async function GET() {
         change_today: changeToday,
         change_yesterday: changeFromYesterday,
         latest_update: latestUpdate,
-        jewelry: {
-          ask: jewelryAsk,
-          bid: jewelryBid,
-        },
       },
       timestamp: new Date().toISOString(),
     };
 
     return new Response(JSON.stringify(data), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   } catch (err: any) {
-    console.error(err);
-    return new Response(
-      JSON.stringify({ error: err.message || 'Error' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    try {
+      return reserved();
+    } catch (err: any) {
+      console.error(err);
+      return new Response(JSON.stringify({ error: err.message || "Error" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
   }
 }
 
+const reserved = async () => {
+  try {
+    const res = await axios.get("https://static-gold.tothanate.workers.dev/");
+
+    var ask = res?.data?.current_prices?.gold_bar?.buy ?? 0;
+    var bid = res?.data?.current_prices?.gold_bar?.sell ?? 0;
+
+    const data = {
+      gold965: {
+        ask,
+        bid,
+        diff: ask - bid,
+        change_today: res?.data?.current_prices?.gold_bar?.change ?? 0,
+        change_yesterday: null,
+        latest_update: res?.data?.metadata?.update_info ?? "",
+      },
+      timestamp: new Date().toISOString(),
+    };
+
+    return new Response(JSON.stringify(data), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (err: any) {
+    console.error(err);
+    return new Response(JSON.stringify({ error: err.message || "Error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+};
